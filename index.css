@@ -1,0 +1,53 @@
+.base {
+  width: 500px;
+  border: 1px dotted red;
+}
+
+.button {
+  height: 200px;
+  width: 200px;
+  border: 25px solid black;
+  display: inline-block;
+}
+
+.startButton {
+  background-color: red;
+  color: white;
+  font-weight: bolder;
+  height: 50px;
+  border-radius: 40px;
+}
+
+.green {
+  background-color: green;
+  border-top-left-radius: 250px;
+}
+.red {
+  background-color: red;
+  border-top-right-radius: 250px;
+}
+.yellow {
+  background-color: #cccc00;
+  border-bottom-left-radius: 250px;
+}
+.blue {
+  background-color: blue;
+  border-bottom-right-radius: 250px;
+}
+
+.center {
+  width: 150px;
+  height: 150px;
+  background-color: #c4cace;
+  border: 40px solid black;
+  font-family: Impact;
+  font-weight: bolder;
+  text-align: center;
+  color: black;
+  margin: 0 auto;
+  padding: 5px;
+  border-radius: 300px;
+  position: fixed;
+  top: 135px;
+  left: 140px;
+}
