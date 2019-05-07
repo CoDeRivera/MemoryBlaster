@@ -19,10 +19,7 @@ export default function ButtonGrid(props) {
 
       <div className="center">
         <h2>Memory Blaster</h2>
-        <button
-          className="startButton"
-          onClick={() => console.log("This will start the game")}
-        >
+        <button className="startButton" onClick={() => props.startGame()}>
           Start
         </button>
       </div>

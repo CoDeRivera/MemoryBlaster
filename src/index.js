@@ -9,7 +9,7 @@ class App extends Component {
     super();
     this.state = {
       usrMoves: [],
-      pcMoves: [],
+      aiMoves: [],
       score: 0,
       isUserTurn: true,
       greenButton: {
@@ -47,6 +47,8 @@ class App extends Component {
     this.activateButton = this.activateButton.bind(this);
     this.playSound = this.playSound.bind(this);
     this.usrTurn = this.usrTurn.bind(this);
+    this.aiTurn = this.aiTurn.bind(this);
+    this.playAISequence = this.playAISequence.bind(this);
   }
   // =====================================================================
 
@@ -105,6 +107,53 @@ class App extends Component {
       }
     );
   }
+
+  aiTurn() {
+    let randomColor = Math.floor(Math.random() * 4);
+    let color = "";
+    if (randomColor == 0) {
+      color = this.state.greenButton.color;
+    } else if (randomColor == 1) {
+      color = this.state.redButton.color;
+    } else if (randomColor == 2) {
+      color = this.state.yellowButton.color;
+    } else {
+      color = this.state.blueButton.color;
+    }
+
+    // =====================================================================
+    //creates temp array and copys state.aiMoves
+    //Push's colorButton and adds it to array
+    //sets state aiMoves[] with the new array of tmpAIMoves[]
+    //Play array sequence
+    let tmpAIMoves = this.state.aiMoves;
+    tmpAIMoves.push(color);
+    this.setState(
+      prevState => {
+        aiMoves: prevState.aiMoves = tmpAIMoves;
+      },
+      () => {
+        //Plays the sequence for the user
+        this.playAISequence();
+      }
+    );
+  }
+  // =====================================================================
+
+  // =====================================================================
+  playAISequence() {
+    let sequence = this.state.aiMoves;
+    let activate = this.activateButton;
+
+    for (let i = 0; i < this.state.aiMoves.length; i++) {
+      (function(i) {
+        setTimeout(() => {
+          activate(sequence[i]);
+        }, 650 * i);
+      })(i);
+    }
+  }
+
   // =====================================================================
 
   // =====================================================================
@@ -121,6 +170,7 @@ class App extends Component {
           handleClick={this.usrTurn}
           isUserTurn={this.state.isUserTurn}
           score={this.state.score}
+          startGame={this.aiTurn}
         />
       </div>
     );
