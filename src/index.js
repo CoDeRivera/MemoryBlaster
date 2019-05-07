@@ -12,6 +12,7 @@ class App extends Component {
       aiMoves: [],
       score: 0,
       isUserTurn: true,
+      gameOver: false,
       greenButton: {
         color: "green"
       },
@@ -104,6 +105,49 @@ class App extends Component {
       },
       () => {
         this.activateButton(color);
+        //Check to make sure that each button chosen, matches sequence
+        for (let i = 0; i < this.state.usrMoves.length; i++) {
+          if (this.state.usrMoves[i] != this.state.aiMoves[i]) {
+            // this.state.wrongAnswer.play();
+            this.setState(
+              {
+                isUserTurn: false,
+                gameOver: true,
+                aiMoves: [],
+                usrMoves: []
+              },
+              () => {
+                console.log("GAME OVER!");
+              }
+            );
+          }
+        }
+        //Timeout to give state.gameOver a chance to update (**There's a better way**)
+        setTimeout(() => {
+          //checks if  the game is over and if its still users turn
+          //makes sure the # of user moves doesnt exceed # of aiMoves
+          //when the # user moves equals the # of aiMoves your turn is over
+          if (
+            this.state.usrMoves.length == this.state.aiMoves.length &&
+            this.state.gameOver == false
+          ) {
+            this.setState(
+              prevState => {
+                return {
+                  isUserTurn: !prevState.isUserTurn,
+                  usrMoves: (prevState.usrMoves = []),
+                  score: (prevState.score += 1)
+                };
+              },
+              () => {
+                setTimeout(() => {
+                  this.aiTurn();
+                  // console.log("aiTurn fired");
+                }, 1200);
+              }
+            );
+          }
+        }, 100);
       }
     );
   }
@@ -135,6 +179,15 @@ class App extends Component {
       () => {
         //Plays the sequence for the user
         this.playAISequence();
+
+        //if aiMoves's length matches
+        if (this.state.aiMoves.length >= this.state.usrMoves.length) {
+          this.setState(prevState => {
+            return {
+              isUserTurn: (prevState.isUserTurn = true)
+            };
+          });
+        }
       }
     );
   }
