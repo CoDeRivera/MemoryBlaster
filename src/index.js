@@ -54,6 +54,24 @@ class App extends Component {
   // =====================================================================
 
   // =====================================================================
+
+  gameRunning() {
+    this.setState(
+      {
+        aiMoves: [],
+        usrMoves: [],
+        isMatch: true,
+        isUserTurn: false,
+        gameOver: false,
+        score: 0
+      },
+      () => {
+        this.aiTurn();
+      }
+    );
+  }
+
+  // =====================================================================
   //  Causes button selected to flash
   // =====================================================================
   activateButton(colorButton) {
